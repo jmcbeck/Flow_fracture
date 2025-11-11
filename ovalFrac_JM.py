@@ -133,8 +133,8 @@ ny_cells = int(dim2_mm * 10)  # 0.1 mm resolution
 dim=(nx_cells, ny_cells)
 fractureGrid = generate_oval_grid(dim[0], dim[1], dim1_mm, dim2_mm, b_dia, ybwall)
 
-#plt.imshow(fractureGrid,cmap='jet')
-#plt.show()
+# plt.imshow(fractureGrid,cmap='jet')
+# plt.show()
 
 gridc=np.zeros(dim,int)
 count=0
@@ -249,5 +249,5 @@ for ii in range(0,dim[0]):
 print('Qapp=', totFlow)
 
 relVelo=QRate/totFlow
-fracAperture=(relVelo*12*1E-3*1E-4)**(1/3) # m (we are using the viscosity of water 1E-3 Pa s and a grid size of 1E-4 m)
+fracAperture=(relVelo*12*1E-3)**(1/3) # m (we are using the viscosity of water 1E-3 Pa s)
 print('Estimated average fracture aperture [m]: ', fracAperture)

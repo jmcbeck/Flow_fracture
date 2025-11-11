@@ -1,0 +1,67 @@
+\documentclass[12pt,a4paper]{article}
+
+% Essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% Document information
+\title{Flow and Fracture Analysis}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+We are considering a fracture between two almost impermeable media. The fracture has an elliptical shape with semi-major axis $a$ and semi-minor axis $b$. The fracture is filled with a fluid of dynamic viscosity $\mu$. The inlet and outlet are also of elliptical shape with semi-major axis $a_{in}$ and semi-minor axis $b_{in}$. They are placed at a short distance from the outer side of the elliptical fractuure. In the experiments, we measure the pressure difference $\Delta p$ between the inlet and outlet, as well as the volumetric flow rate $Q$ through the fracture. From these measurements, we want to estimate the effective aperture $a$ of the fracture. Note that the aperture is not necessarily constant throughout the fracture, but we want to estimate an effective value, i.e., the value that would give the same flow rate if the aperture were constant. Also note that the permeability is not well defined for a fracture, since the flow is essentially two-dimensional and we do not know the third dimension. Therefore, we focus on estimating the aperture instead.
+
+We will make a simplification about the flow field, assuming that the flow is governed by the Hagen-Poiseuille equation. The flow in between two infintie parallel plates is given by the Hagen-Poiseuille equation as:
+\begin{equation}
+q = \frac{a^3 \nabla p}{12 \mu} \quad ,
+\label{eq:hagenPoiseuille}
+\end{equation}
+where $q$ is the volumetric flow rate per length, $a$ is the distance between the plates, $\nabla p$ is the pressure gradient, and $\mu$ is the dynamic viscosity of the fluid. 
+
+As we are dealing with a fracture of elliptical shape, we need to solve the flow field numerically. We will use a finite difference method to solve the flow field in the fracture. The fracture is discretized into a grid of cells, and we will solve for the pressure at each cell. We start out by assuming a hydraulic conductivity $\sigma$ in each cell, which is related to the aperture as:
+\begin{equation}
+\sigma = \frac{a^3}{12 \mu} \quad .
+\label{eq:conductivity}
+\end{equation}
+This gives the simpler equation for the flow rate:
+\begin{equation}
+    q = \sigma \nabla p \quad ,
+\end{equation}
+Due to mass conservation, we have that $\nabla \cdot q = 0$, which gives us the governing equation for the pressure field:
+\begin{equation}
+\nabla \cdot (\sigma \nabla p) = \sigma \nabla^2 p = 0 \quad ,
+\end{equation}
+where the first equality holds since we assume constant $\sigma$. Dividing out by $\sigma$, we solve the Laplace equation $\nabla^2 p = 0$ numerically. We use the grid size in units of one voxel. This field is solved using an implicit finite difference method, where we set up a system of linear equations and solve for the pressure at each cell. The boundary conditions are set such that the pressure at the inlet is $p_{in}$ and the pressure at the outlet is $p_{out}$. The cells outside the fracture are set to have zero conductivity, i.e., no flow can occur there.
+
+After solving for the pressure field, we can compute the total flow rate through the fracture by summing up the flow rates at any cross-section. We used a slice in the middle of the fracture ($i \simeq \lfloor dim_x/2 \rfloor$), where we summed up
+\begin{equation}
+\tilde{Q} = \sum_j p_{(i,j)} - p_{(i+1,j)} \quad ,
+\end{equation}
+From the sum $\tilde{Q}$ we can calculate the total flow rate $Q$ as:
+\begin{equation}
+Q = \sigma \Delta y \tilde{Q} / \Delta x = \sigma \tilde{Q} \quad ,
+\end{equation}
+since
+\begin{equation}
+    Q = \int q \, dy \approx \sum_j q_j \Delta y = \sigma \sum_j \frac{p_{(i,j)} - p_{(i+1,j)}}{\Delta x} \Delta y \quad .
+\end{equation}
+Here, $\Delta y$ is the length of each cell in the direction perpendicular to the flow, and $\Delta x$ is the length of each cell in the direction of the flow. Since we are using a grid with unit spacing, we have $\Delta y = 1$ and $\Delta x = 1$, which simplifies the equation to $Q = \sigma \tilde{Q}$. In a more general case, we would have to include the actual lengths. Note that the $\sigma$ factor is unknown, as it depends on the aperture $a$. Filling in Eq.~\eqref{eq:conductivity}, we get:
+\begin{equation}
+Q = \frac{a^3}{12 \mu} \tilde{Q} \quad .
+\end{equation}
+which then will give us the effective aperture as:
+\begin{equation}
+ a_e = \left( \frac{12 \mu Q}{\tilde{Q}} \right)^{1/3} \quad .
+\end{equation}
+
+
+
+
+\end{document}
