@@ -45,12 +45,14 @@ scanns = ['3', '4', '5', '6', '7', '8', '9', '15', '20', '25', '30', '35', '40',
 res_file = 'C:/Users/jessicmc/research_local/aperture/python/output/results_flowtort_sqr_sub'+spc+'.txt'
 
 
-for scann in scanns:
+#for scann in scanns:
+for scann in ['125']:
 
     gi=1
     while gi<=gmax:
 
-        csv_path = 'C:/Users/jessicmc/research_local/aperture/txt/WG18_ap_sqr_sc'+scann+'_spc'+spc+'_g'+str(gi)+'.txt'
+#        csv_path = 'C:/Users/jessicmc/research_local/aperture/txt/WG18_ap_sqr_sc'+scann+'_spc'+spc+'_g'+str(gi)+'.txt'
+        csv_path = 'WG18_ap_sqr_sc'+scann+'_spc'+spc+'_g'+str(gi)+'.txt'
         
         if not os.path.isfile(csv_path):
             raise FileNotFoundError(f"CSV file not found: {csv_path}")
@@ -223,7 +225,12 @@ for scann in scanns:
                 
                 
         fy, fx = np.gradient(flow)
-        py, px = np.gradient(pressureField)
+        py, px = np.gradient(pressureField) #This gives the pressure gradients
+        effCondX=2/(1/conductanceGrid[:-1][:]+1/conductanceGrid[1:][:])
+        effCondY=2/(1/conductanceGrid[:][:-1]+1/conductanceGrid[:][1:])
+
+        print(np.shape(px),np.shape(py))
+        print(np.shape(effCondX),np.shape(effCondY))
         
         # plt.title('flow')
         # plt.imshow(flow, cmap='hot', vmin=0, vmax=100000)
