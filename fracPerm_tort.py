@@ -218,6 +218,11 @@ for scann in scanns:
         tort = []
         tortw = []
         
+        # py, px = np.gradient(pressureField) #This gives the pressure gradients
+        # effCondX=2/(1/conductanceGrid[:-1][:]+1/conductanceGrid[1:][:])
+        # effCondY=2/(1/conductanceGrid[:][:-1]+1/conductanceGrid[:][1:])
+        
+        
         for jj in range(1, dim[1]-1):
             jc1 = jj-1
             jc2 = jj+1
@@ -326,9 +331,13 @@ for scann in scanns:
         # removed dim[0] in the equation below
         # and then the effective fracture width is close to 1 for synthetic data
         #bhyd=(12*totFlow*dim[0]/(pin-pout))**(1/3)
-        bhyd=((12*totFlow)/(pin-pout))**(1/3)
+        #bhyd=((12*totFlow)/(pin-pout))**(1/3)
         
+        totFn = totFlow/dim[1]
+        delpn = (pin-pout)/dim[0]
+        bhyd=((12*totFn)/delpn)**(1/3)
         
+        #abc
         #print('Effective fracture width: ', bhyd)
         
         print('Scan #, g, b_geo mean, std, b_hyd, tort, weighted tort')
