@@ -15,8 +15,6 @@ import statistics
 import math
 
 
-gmax = 180 
-
 
 # perpen: flow direction is along the smoothest orientation
 #fprms =  ['l513H88A160', 'perpen_l513H68A40', 'perpen_l513H68A160', 'perpen_l513H68A400', 'l513H68A40', 'l513H68A160', 'l513H68A400']
@@ -26,14 +24,84 @@ gmax = 180
 #fprms = ['gmax10_l513H88A10', 'gmax10_l513H88A160', 'gmax10_l513H88A400']
 
 #fprms = ['gmax10_l513H88A160', 'gmax10_l513H88A400']
-fprms = ['gmax2_l513H88A10', 'gmax2_l513H88A160', 'gmax2_l513H88A400']
+#fprms = ['gmax5_l513H88A160', 'gmax5_l513H88A400']
+
+
+# gmax = 435 
+# fprms = ['gmax5_l513H88A160', 'gmax5_l513H88A400']
+# gmax = 261
+# fprms = ['gmax3_l513H88A160', 'gmax3_l513H88A400']
+
+# gmax = 174
+# fprms = ['gmax3_l513H88A10', 'gmax3_l513H88A160', 'gmax3_l513H88A400']
+
+# gmax = 435
+# fprms = ['gmax5_l513H88A10', 'gmax5_l513H88A160', 'gmax5_l513H88A400']
+
+# gmax = 870
+# fprms = ['gmax10_l513H88A10', 'gmax10_l513H88A160', 'gmax10_l513H88A280', 'gmax10_l513H88A400']
+
+# gmax = 300
+# fprms = ['unm_gmax10_l513H88A10', 'unm_gmax10_l513H88A400']
+
+# gmax = 600
+# fprms = ['unm_gmax20_l513H88A10', 'unm_gmax20_l513H88A160', 'unm_gmax20_l513H88A280', 'unm_gmax20_l513H88A400']
+
+# gmax = 1500
+# fprms = ['unm_gmax50_l513H88A10', 'unm_gmax50_l513H88A160', 'unm_gmax50_l513H88A280', 'unm_gmax50_l513H88A400']
+
+
+#gmaxs = [600, 600, 1500, 600, 600, 1500, 600, 600, 1500, 600, 600, 1500]
+#fprms = ['unm_gmax20_l513H68A400', 'unm_gmax20_l513H68A160', 'unm_gmax20_l513H68A280', 'unm_gmax20_l513H68A10', 'unm_perpen_gmax20_l513H68A10', 'unm_perpen_gmax20_l513H68A160', 'unm_perpen_gmax20_l513H68A280', 'unm_perpen_gmax20_l513H68A400']
+#fprms = ['unm_gmax20_l513H68A400', 'unm_perpen_gmax20_l513H68A400', 'unm_gmax50_l513H88A400', 'unm_gmax20_l513H68A10', 'unm_perpen_gmax20_l513H68A10', 'unm_gmax50_l513H88A10', 'unm_gmax20_l513H68A280', 'unm_perpen_gmax20_l513H68A280', 'unm_gmax50_l513H88A280', 'unm_gmax20_l513H68A160', 'unm_perpen_gmax20_l513H68A160', 'unm_gmax50_l513H88A160']
+
+#fprms = ['unm_gmax50_l513H88A280']
+#fprms = ['unm_gmax50_l513H88A400']
+
+# fprms = ['unm_gmax20_l513H68A10', 'unm_perpen_gmax20_l513H68A10', 'unm_gmax50_l513H88A10', 'unm_gmax20_l513H68A400', 'unm_perpen_gmax20_l513H68A400', 'unm_gmax50_l513H88A400', 'unm_gmax20_l513H68A280', 'unm_perpen_gmax20_l513H68A280', 'unm_gmax50_l513H88A280', 'unm_gmax20_l513H68A160', 'unm_perpen_gmax20_l513H68A160', 'unm_gmax50_l513H88A160']
+
+#fprms = ['unm_gmax50_l513H88A10', 'unm_gmax50_l513H88A160', 'unm_gmax50_l513H88A280', 'unm_gmax50_l513H88A400']
+#fprms = ['unm_gmax50_l513H88A280', 'unm_gmax50_l513H88A160']
+
+#fprms = ['unm_gmax50_l513H88A10', 'unm_gmax50_l513H88A400']
+#gmaxtest = 100
+
+fprms = ['unm_gmax20_l513H68A10']
+#fprms = ['unm_perpen_gmax20_l513H68A10']
+
+
+#'unm_gmax50_l513H88A400' # pin= 1e-16
+#pin = 1e-10
+#pin = 1.0e-7
+# strange things happen at very low flow rates
+#pin = 1.0e-5
+#pin = 1.0e-3
+pin = 1
+
+#pin = 0.0001
+#pin = 0.00001
+pout = 0
 
 for fprm in fprms:
 
-    res_file = 'C:/Users/jessicmc/research_local/asperity_simulations/python/output/results_'+fprm+'.txt'
+    res_file = 'C:/Users/jessicmc/research_local/asperity_simulations/python/output/results_nff_'+fprm+'.txt'
+    #res_file = 'C:/Users/jessicmc/research_local/asperity_simulations/python/output/results_dp1en5_nff_'+fprm+'.txt'
+    #res_file = 'C:/Users/jessicmc/research_local/asperity_simulations/python/output/results_dp1en3_gt'+str(gmaxtest)+'_'+fprm+'.txt'
     
-    #
-    gi=1  
+    #gmax = gmaxs[fi]
+    
+    if 'gmax20' in fprm:
+        gmax = 600
+        
+    elif 'gmax50' in fprm:
+        gmax = 1500
+        #gmax = gmaxtest
+    
+
+    gi=1
+    #if 'A280' in fprm:
+    #    gi=201
+    
     while gi<=gmax:
         ginc = str(gi)
         fname = 'bm_syn_'+fprm+'geo'+ginc+'.txt';
@@ -55,6 +123,8 @@ for fprm in fprms:
         
         if bgeomu<1:
             fact = 1e8
+        elif bgeomu<3:
+            fact = 1e6
         elif bgeomu<5:
             fact = 1e5
         elif bgeomu<10:
@@ -64,13 +134,15 @@ for fprm in fprms:
         else:
             fact = 100
             
+        fact = fact*(1/pin)
         conductanceGrid = (b**3)/(12.0)
         
          
-        # plt.imshow(b, cmap='jet')
-        # plt.colorbar(label='aperture')
-        # plt.show()
+        plt.imshow(b, cmap='jet')
+        plt.colorbar(label='aperture')
+        plt.show()
         
+        abc
         
         # Cut out a smaller grid to test code
         # conductanceGrid=conductanceGrid[0:20,0:20]
@@ -96,8 +168,7 @@ for fprm in fprms:
         coll=[]
         datal=[]
         
-        pin=1
-        pout=0
+
         
         for jj in range(0,dim[1]):
             for ii in range(0,dim[0]):
@@ -311,9 +382,40 @@ for fprm in fprms:
         # plt.show()
         
            
+        # find the percent area with no flow 
+        # less than 1% of the mean local flow rate
+        #flowl = flowm.reshape(1, )
         
+        # mean flow
+        flowmu = np.array(flow).reshape(-1).tolist()
+        flmu = sum(flowmu)/len(flowmu)
+        
+        # vertical flow
+        flowvl = np.array(flowv).reshape(-1).tolist()
+        flv = sum(flowvl)/len(flowvl)
+        
+        # flow magnitude
+        flowl = np.array(flowm).reshape(-1).tolist()
+        flm = sum(flowl)/len(flowl)
+        thr = 0.01*flm
+        thr5 = 0.05*flm
+        
+        nn = sum(np.array(flowl)<thr)
+        ntot = len(flowl)
+        nnfr = nn/ntot
+        
+        nn5 = sum(np.array(flowl)<thr5)
+        nnfr5 = nn5/ntot
+        print(nnfr)
+        
+        
+
         tortav = sum(tort)/len(tort)
-        tortavw = sum(tortw)/len(tortw)
+        if len(tortw)==0:
+            tortavw = tortav
+            print('using non-weighted tortuosity')
+        else:
+            tortavw = sum(tortw)/len(tortw)
         
         
         # plt.title('local tortuosity from pressure field')
@@ -329,14 +431,20 @@ for fprm in fprms:
         #abc
         #print('Effective fracture width: ', bhyd)
         
-        print('ginc, b_geo mean, std, b_hyd, tort, weighted tort')
+        print('ginc, b_geo, std, b_hyd, tort, weighted tort, NNF1, NNF5, magnitude flow, mean flow, vertical flow, totflow')
         #new_res = scann+' '+str(gi)+' '+str(bgeomu)+' '+str(bgeostd)+' '+str(bhyd)+' '+str(tortav)+' '+str(tortavw)+'\n'
-        new_res = ginc+' '+str(bgeomu)+' '+str(bgeostd)+' '+str(bhyd)+' '+str(tortav)+' '+str(tortavw)+'\n'
+        #new_res = ginc+' '+str(bgeomu)+' '+str(bgeostd)+' '+str(bhyd)+' '+str(tortav)+' '+str(tortavw)+'\n'
         
+        dat = [int(ginc), round(bgeomu, 8), round(bgeostd, 8), round(bhyd, 8), round(tortav, 7), round(tortavw, 7), round(nnfr, 7), round(nnfr5, 7), flm, flmu, flv, totFn]
+        new_res = " ".join(map(str, dat))
+        
+
         print(new_res)
         gi=gi+1
         
+        abc
+
         with open(res_file, 'a') as file:
             # Write the string to the file
-            file.write(new_res)
+            file.write(new_res+'\n')
         
